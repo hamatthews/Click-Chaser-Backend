@@ -29,8 +29,6 @@ const io = require('socket.io')(server, {
 });
 
 io.on("connection", socket => {
-    console.log(socket.id);
-
     socket.on('click', placeName => {
         socket.broadcast.emit('click', placeName);
     })
