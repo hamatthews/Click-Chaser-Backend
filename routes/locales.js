@@ -8,11 +8,10 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/:placeName').post((req, res) => {
-
     Locale.find({placeName: req.params.placeName})
     .then(locale => {
         if (locale[0]) {
-            locale[0].clicks = req.body.clicks;
+            locale[0].clicks++;
             locale[0].save()
             .then(() => res.json('locale added'))
             .catch(err => res.status(400).json('Error: ' + err));   
