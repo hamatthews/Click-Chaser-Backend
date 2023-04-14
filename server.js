@@ -18,9 +18,20 @@ const localesRouter = require('./routes/locales');
 
 app.use('/locales', localesRouter);
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log('Server running on port ' + port);
-})
+});
 
+const io = require('socket.io')(server, {
+    cors: {
+        origin: '*'
+    }
+});
 
+io.on("connection", socket => {
+    console.log(socket.id);
 
+    socket.on('click', placeName => {
+        socket.broadcast.emit('click', placeName);
+    })
+});
